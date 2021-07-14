@@ -57,6 +57,10 @@ export class AuthService {
     return this.isLoggedIn$.asObservable();
   }
 
+  public getUserData(): Observable<User> {
+    return this.userDetails$.asObservable();
+  }
+
   private authLogin(provider: firebase.default.auth.AuthProvider) {
     return this.afAuth.signInWithPopup(provider).then((res) => {
       this.isLoggedIn$.next(true);
