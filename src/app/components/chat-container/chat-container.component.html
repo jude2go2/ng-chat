@@ -3,8 +3,8 @@
     <app-room-list [rooms]="rooms"></app-room-list>
   </div>
 
-  <div class="chat-container__chat">
-    <h3>CHAT</h3>
+  <div class="chat-container__chat" *ngIf="messages$ | async as messages">
+    <app-chat [messages]="messages"></app-chat>
   </div>
 
   <div class="chat-container__add-room">

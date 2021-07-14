@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IChatRoom } from '../models';
+import { IChatRoom, IMessage } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +30,26 @@ export class ChatService {
             return <IChatRoom>{
               ...data,
               id,
+            };
+          });
+        })
+      );
+  }
+
+  public getRoomMessages(roomId: string): Observable<Array<IMessage>> {
+    return this._db
+      .collection('rooms')
+      .doc(roomId)
+      .collection('messages')
+      .snapshotChanges()
+      .pipe(
+        map((messages) => {
+          return messages.map((message) => {
+            const data: IMessage = <IMessage>message.payload.doc.data();
+
+            return {
+              ...data,
+              id: message.payload.doc.id,
             };
           });
         })
