@@ -21,9 +21,10 @@ import { AddRoomComponent } from '../add-room/add-room.component';
 export class ChatContainerComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   private userId: string = '';
+  private roomId?: string;
 
   public rooms$: Observable<Array<IChatRoom>>;
-  public messages$: Observable<Array<IMessage>>;
+  public messages$?: Observable<Array<IMessage>>;
 
   constructor(
     private chatService: ChatService,
@@ -33,11 +34,10 @@ export class ChatContainerComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {
     this.rooms$ = this.chatService.getRooms();
-
-    const roomId: string = activatedRoute.snapshot.url[1].path;
-
-    this.messages$ = this.chatService.getRoomMessages(roomId);
-    console.log('room id', roomId);
+    if (activatedRoute.snapshot.url.length > 1) {
+      this.roomId = activatedRoute.snapshot.url[1].path;
+      this.messages$ = this.chatService.getRoomMessages(this.roomId);
+    }
 
     this.subscription.add(
       router.events
@@ -80,5 +80,11 @@ export class ChatContainerComponent implements OnInit, OnDestroy {
 
   public onAddRoom(roomName: string, userId: string) {
     this.chatService.addRoom(roomName, userId);
+  }
+
+  public onSendMessage(message: string): void {
+    if (this.userId && this.roomId) {
+      this.chatService.sendMessasge(this.userId, message, this.roomId);
+    }
   }
 }
