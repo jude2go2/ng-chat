@@ -6,6 +6,7 @@
   <div class="chat-container__chat" *ngIf="messages$ | async as messages">
     <app-chat
       [messages]="messages"
+      [currentUserId]="userId"
       (onSendMessage)="onSendMessage($event)"
     ></app-chat>
   </div>

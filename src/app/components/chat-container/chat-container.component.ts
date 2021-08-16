@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   ActivatedRoute,
+  ActivationEnd,
   NavigationEnd,
   Router,
   RouterEvent,
@@ -20,11 +21,11 @@ import { AddRoomComponent } from '../add-room/add-room.component';
 })
 export class ChatContainerComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-  private userId: string = '';
   private roomId?: string;
 
   public rooms$: Observable<Array<IChatRoom>>;
   public messages$?: Observable<Array<IMessage>>;
+  public userId: string = '';
 
   constructor(
     private chatService: ChatService,
@@ -59,6 +60,14 @@ export class ChatContainerComponent implements OnInit, OnDestroy {
         .pipe(filter((data) => !!data))
         .subscribe((user) => {
           this.userId = user.uid;
+        })
+    );
+    this.subscription.add(
+      this.router.events
+        .pipe(filter((routerEvent) => routerEvent instanceof ActivationEnd))
+        .subscribe((data) => {
+          const routeEvent = data as ActivationEnd;
+          this.roomId = routeEvent.snapshot.paramMap.get('roomId') || '';
         })
     );
   }
