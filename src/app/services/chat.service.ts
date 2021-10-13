@@ -47,7 +47,6 @@ export class ChatService {
           return messages.map((message) => {
             const data: IMessage = <IMessage>message.payload.doc.data();
             console.log(data);
-
             return {
               ...data,
               id: message.payload.doc.id,
@@ -65,7 +64,6 @@ export class ChatService {
   }
 
   public sendMessasge(userId: string, body: string, roomId: string): void {
-    debugger;
     this._db.collection('rooms').doc(roomId).collection('messages').add({
       body,
       userId,

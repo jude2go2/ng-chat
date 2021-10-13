@@ -2,9 +2,51 @@
   &__messages {
     height: 323px;
     width: 100%;
+    padding: 0 4px;
   }
   &__message {
     height: 50px;
+    background: #bdbdbd;
+    border-radius: 5px;
+    margin: 5px 0;
+    &--current-user {
+      background: #9aff9f;
+      margin-right: 30px;
+      position: relative;
+      &:after {
+        content: "";
+        width: 0;
+        height: 0;
+        content: "";
+        border-left: 0px solid transparent;
+        border-right: 18px solid transparent;
+        border-bottom: 20px solid #9aff9f;
+        transform: rotate(90deg);
+        display: block;
+        position: absolute;
+        top: -1px;
+        right: -15px;
+      }
+    }
+    &--other-user {
+      background: #c8c8c8;
+      margin-right: 30px;
+      position: relative;
+      &:after {
+        content: "";
+        width: 0;
+        height: 0;
+        content: "";
+        border-left: 0px solid transparent;
+        border-right: 18px solid transparent;
+        border-bottom: 20px solid #c8c8c8;
+        transform: rotate(90deg);
+        display: block;
+        position: absolute;
+        top: -1px;
+        right: -15px;
+      }
+    }
   }
 
   &__form {

@@ -11,7 +11,14 @@
           class="chat__scroller"
           #virtualScroll
         >
-          <div *cdkVirtualFor="let message of messages" class="chat__message">
+          <div
+            *cdkVirtualFor="let message of messages"
+            class="chat__message"
+            [ngClass]="{
+              'chat__message--current-user': userId === message.userId,
+              'chat__message--other-user': userId !== message.userId
+            }"
+          >
             {{ message.body }}
           </div>
         </cdk-virtual-scroll-viewport>
