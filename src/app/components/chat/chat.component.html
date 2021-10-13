@@ -1,19 +1,38 @@
 <div class="chat" *ngIf="messages">
-  <div class="chat__messages">
-    <cdk-virtual-scroll-viewport
-      itemSize="50"
-      class="chat__scroller"
-      #virtualScroll
-    >
-      <div *cdkVirtualFor="let message of messages" class="chat__message">
-        {{ message.body }}
+  <div class="chat__case">
+    <div class="chat__earsection">
+      <div class="chat__camera"></div>
+      <div class="chat__speaker"></div>
+    </div>
+    <div class="chat__screen">
+      <div class="chat__messages">
+        <cdk-virtual-scroll-viewport
+          itemSize="50"
+          class="chat__scroller"
+          #virtualScroll
+        >
+          <div *cdkVirtualFor="let message of messages" class="chat__message">
+            {{ message.body }}
+          </div>
+        </cdk-virtual-scroll-viewport>
       </div>
-    </cdk-virtual-scroll-viewport>
-  </div>
-  <div class="chat__form">
-    <input type="text" #newMessage />
-    <button type="button" (click)="sendMessage(newMessage.value, newMessage)">
-      Send
-    </button>
+      <div class="chat__form">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Favorite food</mat-label>
+          <input matInput #newMessage placeholder="Your Message" />
+        </mat-form-field>
+        <button
+          mat-mini-fab
+          color="primary"
+          type="button"
+          (click)="sendMessage(newMessage.value, newMessage)"
+        >
+          <mat-icon>send</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="chat__button">
+      <div class="chat__buttonsquare"></div>
+    </div>
   </div>
 </div>
